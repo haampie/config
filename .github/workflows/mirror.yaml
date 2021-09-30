@@ -1,0 +1,20 @@
+name: mirror
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: '13 14 * * 0'
+
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Add upstream
+        run: |
+          git remote add upstream https://git.savannah.gnu.org/git/config.git
+          git fetch upstream master
+          git push origin upstream/master:master
